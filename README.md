@@ -5,9 +5,11 @@ Basic job and configuration to start slumber from jenkins
 1. Pull the docker image:
 
   `docker pull thetestguys/slumber-docker`
+
 2. Run with this command:
 
   `docker run -d -p 8080:8080 -p 50000:50000 -v <volume>/jenkins:/var/jenkins_home thetestguys/slumber-docker`
+  
 3. Run these docker commands to setup basic job and config:
     `docker cp config.xml`
 
