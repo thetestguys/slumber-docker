@@ -1,4 +1,0 @@
-maven-plugin:latest
-git:latest
-git-client:latest
-htmlpublisher:latest

@@ -1,42 +1,17 @@
-# jenkins
+# slumber-docker
+Basic job and configuration to start slumber from jenkins
 
-## Contents
-This Jenkins image has the following:
-- Latest Jenkins LTS
-- OpenJDK 8
-- Maven 3
-- Nano
-- Git
-- Minimal plugins to get CI process started
-
-## Pre-installed Jenkins plugins
-- Maven Integration
-- Docker and Docker Slaves
-- Build Pipeline
-- Config File Provider
-- Console Column
-- Copy to Slave
-- Extra Columns
-- Favorite
-- Folder
-- Git
-- HTML Publisher
-- Javadoc
-- Workflow Aggregator
-- Docker Build Step
-
-## Build from Dockerfile
-1. Run command: `docker build -t thetestguys/slumber-docker .`
-
-## How to run
+## How to use
 1. Pull the docker image: `docker pull thetestguys/slumber-docker`
 2. Run with this command: `docker run -d -p 8080:8080 -p 50000:50000 -v <volume>/jenkins:/var/jenkins_home thetestguys/slumber-docker`
+3. Run these docker commands to setup basic job and config:
+    `docker cp config.xml <container_name>:/var/jenkins_home`
+    `docker cp hudson.tasks.Maven.xml <container_name>:/var/jenkins_home`
+    `docker exec -d <container_name> mkdir /var/jenkins_home/jobs/build_slumber`
+    `docker cp build_slumber/config.xml <container_name>:/var/jenkins_home/jobs/build_slumber/config.xml`
+    `docker exec -d <container_name> curl -X POST http://localhost:8080/restart`
 
 ## Jenkins global tool configuration
-Jenkins global tools are not configured by default. After container is started, supply these variables in Jenkins > Global Tool Configuration:
+The commands above setup the Java and Maven in Jenkins container. The default locations are:
 * JDK > JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
 * Maven > MAVEN_HOME: /opt/maven
-
-## Additionals
-* Notice that plugins.txt should not have any empty line at the end of file (especially when building in Windows)
-* Included is a docker-compose.yml which starts up this Jenkins image and a Selenium Grid setup (a hub, a Firefox node and a Chrome node)
